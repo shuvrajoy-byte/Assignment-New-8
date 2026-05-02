@@ -8,10 +8,11 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5000/tiles?_limit=4")
+    fetch("http://localhost:5000/tiles")
       .then((res) => res.json())
       .then((data) => {
-        setFeaturedTiles(data);
+        const tilesArray = Array.isArray(data) ? data : data.tiles || [];
+        setFeaturedTiles(tilesArray.slice(0, 4));
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -20,51 +21,55 @@ export default function Home() {
   return (
     <div>
       {/* Banner */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden"
+      <section
+        className="relative min-h-[90vh] flex items-center justify-center overflow-hidden"
         style={{
-          background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 60%, #533483 100%)"
-        }}>
-        {/* Animated circles */}
+          background:
+            "linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 60%, #533483 100%)",
+        }}
+      >
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute w-96 h-96 rounded-full opacity-10 bg-purple-500 -top-20 -left-20 animate-pulse"></div>
-          <div className="absolute w-72 h-72 rounded-full opacity-10 bg-blue-500 top-40 right-10 animate-pulse delay-1000"></div>
-          <div className="absolute w-56 h-56 rounded-full opacity-10 bg-pink-500 bottom-10 left-1/3 animate-pulse delay-500"></div>
+          <div className="absolute w-72 h-72 rounded-full opacity-10 bg-blue-500 top-40 right-10 animate-pulse"></div>
+          <div className="absolute w-56 h-56 rounded-full opacity-10 bg-pink-500 bottom-10 left-1/3 animate-pulse"></div>
         </div>
 
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0 opacity-5"
+        <div
+          className="absolute inset-0 opacity-5"
           style={{
-            backgroundImage: "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-            backgroundSize: "50px 50px"
-          }}>
-        </div>
+            backgroundImage:
+              "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
+            backgroundSize: "50px 50px",
+          }}
+        ></div>
 
-        {/* Content */}
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-          <div className="badge badge-primary badge-outline mb-4 text-white border-purple-400 px-4 py-3">
+          <div className="inline-block border border-purple-400 text-purple-300 px-4 py-2 rounded-full text-sm mb-6">
             ✨ Premium Tile Collection 2024
           </div>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
             Discover Your
-            <span className="block bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
-              Perfect Aesthetic
-            </span>
+            <span className="block text-purple-400">Perfect Aesthetic</span>
           </h1>
           <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-            Explore our curated collection of premium tiles — from classic marble to modern geometric designs. Transform your space today.
+            Explore our curated collection of premium tiles — from classic
+            marble to modern geometric designs. Transform your space today.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/all-tiles"
-              className="btn btn-primary btn-lg px-8 bg-gradient-to-r from-purple-600 to-blue-600 border-none hover:from-purple-700 hover:to-blue-700">
+            <Link
+              href="/all-tiles"
+              className="btn btn-primary btn-lg px-8"
+            >
               Browse Now 🧱
             </Link>
-            <Link href="/all-tiles"
-              className="btn btn-outline btn-lg px-8 text-white border-white hover:bg-white hover:text-gray-900">
+            <Link
+              href="/all-tiles"
+              className="btn btn-outline btn-lg px-8 text-white border-white hover:bg-white hover:text-gray-900"
+            >
               View Collection
             </Link>
           </div>
 
-          {/* Stats */}
           <div className="flex flex-wrap justify-center gap-8 mt-12">
             <div className="text-center">
               <div className="text-3xl font-bold text-white">20+</div>
@@ -87,10 +92,9 @@ export default function Home() {
         <div className="flex animate-marquee whitespace-nowrap">
           {[1, 2, 3].map((_, i) => (
             <span key={i} className="mx-4 text-sm font-medium">
-              🆕 New Arrivals: Ocean Blue Ceramic &nbsp;|&nbsp;
-              ⭐ Weekly Feature: Modern Geometric Patterns &nbsp;|&nbsp;
-              🎨 Join the Community &nbsp;|&nbsp;
-              💎 Premium Marble Collection &nbsp;|&nbsp;
+              🆕 New Arrivals: Ocean Blue Ceramic &nbsp;|&nbsp; ⭐ Weekly
+              Feature: Modern Geometric Patterns &nbsp;|&nbsp; 🎨 Join the
+              Community &nbsp;|&nbsp; 💎 Premium Marble Collection &nbsp;|&nbsp;
               🏠 Transform Your Space &nbsp;|&nbsp;
             </span>
           ))}
@@ -100,11 +104,13 @@ export default function Home() {
       {/* Featured Tiles */}
       <section className="max-w-6xl mx-auto px-4 py-16">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Tiles</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Featured Tiles
+          </h2>
           <p className="text-gray-500 max-w-xl mx-auto">
             Hand-picked premium tiles from our collection
           </p>
-          <div className="divider max-w-xs mx-auto"></div>
+          <div className="w-24 h-1 bg-primary mx-auto mt-4 rounded"></div>
         </div>
 
         {loading ? (
