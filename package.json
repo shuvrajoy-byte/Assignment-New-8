@@ -3,14 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
-  },
+  "dev": "next dev",
+  "build": "next build",
+  "start": "next start",
+  "lint": "next lint",
+  "json-server": "json-server --watch data/tiles.json --port 5000"
+},
   "dependencies": {
     "better-auth": "^1.6.9",
     "daisyui": "^5.5.19",
+    "json-server": "^1.0.0-beta.15",
     "mongoose": "^9.6.1",
     "next": "16.2.4",
     "react": "19.2.4",
