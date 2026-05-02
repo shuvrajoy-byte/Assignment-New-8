@@ -1,47 +1,32 @@
 import Link from "next/link";
 
-const categoryColors = {
-  ceramic: "badge-primary",
-  marble: "badge-secondary",
-  terracotta: "badge-warning",
-  mosaic: "badge-success",
-  stone: "badge-neutral",
-  metallic: "badge-error",
-  default: "badge-ghost",
-};
-
 export default function TileCard({ tile }) {
   return (
-    <div className="card bg-base-100 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-base-200">
-      <figure className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
+    <div className="group cursor-pointer">
+      <div className="relative overflow-hidden bg-gray-100 aspect-square mb-4">
         <img
-          src={`https://picsum.photos/seed/${tile.id}/400/300`}
+          src={`https://picsum.photos/seed/${tile.id}/400/400`}
           alt={tile.title}
-          className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
-        <div className="absolute top-2 right-2">
-          <span className={`badge ${tile.inStock ? "badge-success" : "badge-error"} badge-sm`}>
-            {tile.inStock ? "In Stock" : "Out of Stock"}
-          </span>
-        </div>
-      </figure>
-      <div className="card-body p-4">
-        <div className="flex items-start justify-between gap-2">
-          <h2 className="card-title text-sm font-bold line-clamp-1">{tile.title}</h2>
-          <span className={`badge ${categoryColors[tile.category] || categoryColors.default} badge-sm shrink-0`}>
-            {tile.category}
-          </span>
-        </div>
-        <p className="text-xs text-gray-500 line-clamp-2">{tile.description}</p>
-        <div className="flex items-center justify-between mt-2">
-          <span className="text-lg font-bold text-primary">${tile.price}</span>
-          <span className="text-xs text-gray-400">{tile.dimensions}</span>
-        </div>
-        <div className="card-actions mt-2">
-          <Link href={`/tile/${tile.id}`} className="btn btn-primary btn-sm w-full">
+        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+          <Link
+            href={`/tile/${tile.id}`}
+            className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white text-black px-6 py-2 text-xs tracking-widest uppercase hover:bg-black hover:text-white transition-colors"
+          >
             View Details
           </Link>
         </div>
+        {!tile.inStock && (
+          <div className="absolute top-3 left-3 bg-gray-900 text-white text-xs px-2 py-1 tracking-wider">
+            Sold Out
+          </div>
+        )}
+      </div>
+      <div>
+        <p className="text-xs tracking-widest uppercase text-gray-400 mb-1">{tile.category}</p>
+        <h3 className="text-sm font-medium text-gray-900 mb-1">{tile.title}</h3>
+        <p className="text-sm text-gray-600">${tile.price} <span className="text-gray-400 text-xs">{tile.dimensions}</span></p>
       </div>
     </div>
   );
